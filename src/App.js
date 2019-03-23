@@ -1,13 +1,10 @@
-import React, { useEffect, useState, Fragment, useCallback } from 'react';
+import React, { useEffect, useState, Fragment } from 'react';
 import Papa from 'papaparse';
-import * as d3 from 'd3';
 
 import { ParallelCoordinatesChart } from './components/ParallelCoordinatesChart';
 import { Table } from './components/Table';
 import { HexbinChart } from './components/HexbinChart';
 //import { FileDrop } from './components/FileDrop';
-
-let parcoords;
 
 const App = React.memo(() => {
 	const [ resetBrush, setResetBrush ] = useState(false);
@@ -17,7 +14,7 @@ const App = React.memo(() => {
 	//console.log(highLight)
 
 	useEffect(() => {
-		Papa.parse('https://dex-3.herokuapp.com/csv/data.csv', {
+		Papa.parse('http://localhost:3000/csv/cars.csv', {
 			download: true,
 			complete: function(results) {
 				//console.log('Finished:', results);

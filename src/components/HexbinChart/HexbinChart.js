@@ -2,7 +2,7 @@ import React from 'react';
 import { FlexibleXYPlot, HexbinSeries, XAxis, YAxis, ChartLabel } from 'react-vis/es';
 import 'react-vis/dist/style.css';
 
-const DIMENSIONS = [ 'out:Total [EUI]', 'out:Cooling [EUI]' ];
+const DIMENSIONS = [ 'displacement (cc)', 'power (hp)' ];
 
 const HexbinChart = React.memo(({ DATA }) => {
 	const data = DATA.map((d) => ({

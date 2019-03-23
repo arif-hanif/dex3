@@ -4,10 +4,10 @@ import * as d3 from 'd3';
 
 import './style.css';
 
-var green_to_blue = d3.scaleLinear().domain([ 30, 80 ]).range([ 'darkblue', 'red' ]).interpolate(d3.interpolateLab);
+var green_to_blue = d3.scaleLinear().domain([ 0, 200 ]).range([ 'blue', 'red' ]).interpolate(d3.interpolateLab);
 
 var color = function(d) {
-	return green_to_blue(d['out:Total [EUI]']);
+	return green_to_blue(d['power (hp)']);
 };
 
 const margin = { top: 100, left: 60, bottom: 20, right: 120 };
@@ -92,6 +92,7 @@ const ParallelCoordinatesChart = React.memo(
 						.margin(margin)
 						//.mode('queue') .composite("darker")
 						.hideAxis([
+							'name',
 							'out:Cooling [EUI]',
 							'out:Heating [EUI]',
 							'out:Lights/Plug [EUI]',
