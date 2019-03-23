@@ -14,7 +14,7 @@ const App = React.memo(() => {
 	//console.log(highLight)
 
 	useEffect(() => {
-		Papa.parse('http://localhost:3000/csv/cars.csv', {
+		Papa.parse('https://dex-3.herokuapp.com/csv/cars.csv', {
 			download: true,
 			complete: function(results) {
 				//console.log('Finished:', results);
