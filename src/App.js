@@ -1,42 +1,122 @@
-import React, {useEffect, useState} from 'react';
-import Grid from 'styled-components-grid';
+import React, { useEffect, useState, Fragment, useCallback } from 'react';
+import Papa from 'papaparse';
+import * as d3 from 'd3';
 
-import {ParallelCoordinatesChart} from './components/ParallelCoordinatesChart';
-import {Table} from './components/Table';
-import {HexbinChart} from './components/HexbinChart';
-import {FileDrop} from './components/FileDrop';
+import { ParallelCoordinatesChart } from './components/ParallelCoordinatesChart';
+import { Table } from './components/Table';
+import { HexbinChart } from './components/HexbinChart';
+//import { FileDrop } from './components/FileDrop';
 
-const originaldata = [{A: 1, B: 2}, {A: 3, B: 4}, {A: 1, B: 3}, {A: 3, B: 4}];
+let parcoords;
 
-const App = () => {
-  const [data, setData] = useState(null);
-  const [highlightedData, setHighlightedData] = useState(null);
+const App = React.memo(() => {
+	const [ resetBrush, setResetBrush ] = useState(false);
+	const [ data, setData ] = useState(null);
+	const [ brushedData, setBrushedData ] = useState(null);
+	const [ highLight, setHighLight ] = useState(null);
+	//console.log(highLight)
 
-  useEffect(()=>{
-    setData(originaldata)
-    setHighlightedData(originaldata)
-  }, [data])
+	useEffect(() => {
+		Papa.parse('http://localhost:3000/csv/data.csv', {
+			download: true,
+			complete: function(results) {
+				//console.log('Finished:', results);
+				setData(results);
+			},
+			header: true
+		});
+	}, []);
 
-  console.log(highlightedData)
+	console.log(resetBrush);
 
-
-
-  return(
-      <Grid halign="justify-center">
-        <Grid.Unit size={0.1}>
-          <FileDrop/>
-        </Grid.Unit>
-        <Grid.Unit size={0.9}>
-          <ParallelCoordinatesChart data={data} setHighlightedData={setHighlightedData} shadows />
-        </Grid.Unit>
-        <Grid.Unit size={0.75}>
-          <Table />
-        </Grid.Unit>
-        <Grid.Unit size={0.25}>
-          <HexbinChart/>
-        </Grid.Unit>
-      </Grid>
-  )
-};
+	return (
+		<Fragment>
+			{data && (
+				<Fragment>
+					<div
+						style={{
+							display: 'flex',
+							justifyContent: 'space-between'
+						}}
+					>
+						<div
+							style={{
+								border: '1px solid #D3D3D3',
+								borderRadius: '5px',
+								font: '26px sans-serif',
+								fontWeight: 900,
+								flex: 0.75,
+								marginLeft: '40px',
+								padding: '20px'
+							}}
+						>
+							{`${brushedData ? brushedData.length : data.data.length} / ${data.data.length} selected`}
+							<br />
+							<button>Settings</button>
+							<br />
+							<button onClick={() => setResetBrush(true)}>Reset</button>
+							<br />
+							<button onClick={() => setHighLight(null)}>Clear Highlight</button>
+						</div>
+						<div
+							style={{
+								border: '1px solid #D3D3D3',
+								borderRadius: '5px',
+								flex: 3,
+								marginLeft: '20px',
+								padding: '20px',
+								marginRight: '40px'
+							}}
+						>
+							<ParallelCoordinatesChart
+								resetBrush={resetBrush}
+								setResetBrush={setResetBrush}
+								highLight={highLight}
+								data={data.data}
+								brushedData={brushedData}
+								setBrushedData={setBrushedData}
+								setHighLight={setHighLight}
+							/>
+						</div>
+					</div>
+					<div
+						style={{
+							display: 'flex',
+							justifyContent: 'space-between'
+						}}
+					>
+						<div
+							style={{
+								border: '1px solid #D3D3D3',
+								borderRadius: '5px',
+								flex: 2,
+								marginTop: '20px',
+								marginLeft: '40px'
+							}}
+						>
+							<Table
+								data={brushedData ? brushedData : data.data}
+								columnHeaders={data.meta.fields}
+								setHighlight={setHighLight}
+							/>
+						</div>
+						<div
+							style={{
+								border: '1px solid #D3D3D3',
+								borderRadius: '5px',
+								flex: 1,
+								marginTop: '20px',
+								marginLeft: '20px',
+								marginRight: '40px'
+							}}
+						>
+							<HexbinChart DATA={brushedData ? brushedData : data.data} />
+						</div>
+					</div>
+				</Fragment>
+			)}
+		</Fragment>
+	);
+});
 
 export default App;

@@ -1,5 +1,6 @@
 .parcoords>svg,
 .parcoords>canvas {
+  font: 11px monaco;
   position: absolute;
 }
 
@@ -8,9 +9,9 @@
 }
 
 .parcoords text.label {
-  font: 12px sans-serif;
   cursor: default;
   fill: black;
+  font-weight: 900;
 }
 
 .parcoords rect.background {
@@ -33,20 +34,20 @@
 .parcoords .axis line,
 .parcoords .axis path {
   font: 16px sans-serif;
-  fill: none;
+  fill: black;
   stroke: #222;
-  shape-rendering: crispEdges;
 }
 
 .parcoords canvas {
   opacity: 1;
+  transition: opacity 0.3s;
   -moz-transition: opacity 0.3s;
   -webkit-transition: opacity 0.3s;
   -o-transition: opacity 0.3s;
 }
 
 .parcoords canvas.faded {
-  opacity: 0.5;
+  opacity: 0.25;
 }
 
 .parcoords canvas.dimmed {
@@ -54,6 +55,11 @@
 }
 
 .parcoords {
+  text-shadow:
+    -1px -1px 0 white,
+    1px -1px 0 white,
+    -1px 1px 0 white,
+    1px 1px 0 white;
   font: 16px sans-serif;
   -webkit-touch-callout: none;
   -webkit-user-select: none;

@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@handsontable/react": "^3.0.0",
     "d3": "^5.9.2",
     "handsontable": "^7.0.0",
     "lodash-es": "^4.17.11",
@@ -10,6 +11,9 @@
     "parcoord-es": "^2.2.8",
     "react": "^16.8.4",
     "react-dom": "^16.8.4",
+    "react-dropzone": "^10.0.5",
+    "react-dual-listbox": "^1.4.2",
+    "react-modal": "^3.8.1",
     "react-scripts": "2.1.8",
     "react-vis": "^1.11.6",
     "styled-components": "^4.1.3",
