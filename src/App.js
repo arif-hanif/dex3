@@ -49,8 +49,6 @@ const App = React.memo(() => {
 						>
 							{`${brushedData ? brushedData.length : data.data.length} / ${data.data.length} selected`}
 							<br />
-							<button>Settings</button>
-							<br />
 							<button onClick={() => setResetBrush(true)}>Reset</button>
 							<br />
 							<button onClick={() => setHighLight(null)}>Clear Highlight</button>
